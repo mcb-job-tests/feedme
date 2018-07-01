@@ -18,11 +18,11 @@ http://zeromq.org/intro:read-the-manual
 
 Junit 4
 
-other dependencies can be view in project pom.xml
-
-application creates database named 'feedme' & collection named 'fixtures'
+Other dependencies can be view in project pom.xml
 
 - Instructions
+
+Application creates database named 'feedme' & collection named 'fixtures'
 
 Before running a Test or the main Application, Start MongoDB from a linux terminal:
 sudo service mongod start
