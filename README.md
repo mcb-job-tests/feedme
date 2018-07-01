@@ -23,6 +23,7 @@ other dependencies can be view in project pom.xml
 application creates database named 'feedme' & collection named 'fixtures'
 
 - Instructions
+
 Before running a Test or the main Application, Start MongoDB from a linux terminal:
 sudo service mongod start
 
@@ -34,6 +35,7 @@ use feedme
 db.fixtures.find().pretty()
 
 - Further Comments
+
 ZeroMq was used to implement the messgae queues for the advanced json packet sharding / partitioning.
 In the main Application, an executor service is used to 'simulate' the effect of runnning a single json publisher app and multiple independant NoSQL writers (json consumers) apps.
 
