@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<types>
+	<event>
+		<header>
+			<field index="0" name="msgId" datatype="integer"/>
+			<field index="1" name="operation" datatype="string"/>
+			<field index="2" name="type" datatype="string"/>
+			<field index="3" name="timestamp" datatype="integer"/>
+		</header>
+		<body>
+			<field index="4" name="eventId" datatype="string"/>
+			<field index="5" name="category" datatype="string"/>
+			<field index="6" name="subCategory" datatype="string"/>
+			<field index="7" name="name" datatype="string"/>
+			<field index="8" name="startTime" datatype="integer"/>
+			<field index="9" name="displayed" datatype="boolean"/>
+			<field index="10" name="suspended" datatype="boolean"/>
+		</body>
+	</event>
+	<market>
+		<header>
+			<field index="0" name="msgId" datatype="integer"/>
+			<field index="1" name="operation" datatype="string"/>
+			<field index="2" name="type" datatype="string"/>
+			<field index="3" name="timestamp" datatype="integer"/>
+		</header>
+		<body>
+			<field index="4" name="eventId" datatype="string"/>
+			<field index="5" name="marketId" datatype="string"/>
+			<field index="6" name="name" datatype="string"/>
+			<field index="7" name="displayed" datatype="boolean"/>
+			<field index="8" name="suspended" datatype="boolean"/>
+		</body>
+	</market>
+	<outcome>
+		<header>
+			<field index="0" name="msgId" datatype="integer"/>
+			<field index="1" name="operation" datatype="string"/>
+			<field index="2" name="type" datatype="string"/>
+			<field index="3" name="timestamp" datatype="integer"/>
+		</header>
+		<body>
+			<field index="4" name="marketId" datatype="string"/>
+			<field index="5" name="outcomeId" datatype="string"/>
+			<field index="6" name="name" datatype="string"/>
+			<field index="7" name="price" datatype="string"/>
+			<field index="8" name="displayed" datatype="boolean"/>
+			<field index="9" name="suspended" datatype="boolean"/>
+		</body>
+	</outcome>
+</types>

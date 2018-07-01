@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: feedme.NoSqlConnectionTests
+-------------------------------------------------------------------------------
+Tests run: 11, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 2.558 s <<< FAILURE! - in feedme.NoSqlConnectionTests
+updateMarketInEventFixtureDocument(feedme.NoSqlConnectionTests)  Time elapsed: 0.214 s  <<< FAILURE!
+java.lang.AssertionError
+	at feedme.NoSqlConnectionTests.updateMarketInEventFixtureDocument(NoSqlConnectionTests.java:240)
+

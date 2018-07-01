@@ -1,0 +1,5 @@
+feedme/FeedMeClientTests.class
+feedme/NoSqlConnectionTests.class
+feedme/TransformerTests.class
+feedme/DomParserTests.class
+feedme/TypesTests.class
