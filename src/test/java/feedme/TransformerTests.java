@@ -1,7 +1,5 @@
 package feedme;
 
-/*import jdk.nashorn.internal.ir.ObjectNode;
-import org.json.simple.JSONObject;*/
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Assert;
 import org.junit.Test;

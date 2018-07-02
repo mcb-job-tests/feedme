@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class NoSqlConnectionTests {
         feedmeDbConnection.createEventFixture(transformer.createJsonObject( new Packet(packet2) ));
         Assert.assertEquals(2, feedmeDbConnection.getFixturesCollection().count());
 
-        Document document = feedmeDbConnection.getFixturesCollection().find(eq("event.body.eventId", "not-valid-event-id!")).first();
+        Document document = feedmeDbConnection.getFixturesCollection().find(eq("eventId", "not-valid-event-id!")).first();
         Assert.assertNull(document);
     }
 
@@ -60,48 +61,44 @@ public class NoSqlConnectionTests {
         Assert.assertEquals(2, feedmeDbConnection.getFixturesCollection().count());
 
         // get Document created from packet2
-        Document document = feedmeDbConnection.getFixturesCollection().find( eq("event.body.eventId", "ffd16cdf-e36e-4819-a1ab-fa4d021701b5")).first();
-        Assert.assertNotNull(document);
+        Document event = feedmeDbConnection.getFixturesCollection().find( eq("eventId", "ffd16cdf-e36e-4819-a1ab-fa4d021701b5")).first();
+        Assert.assertNotNull(event);
 
-        Document event = document.get("event", Document.class);
-        Document header = event.get("header", Document.class);
-        Document body = event.get("body", Document.class);
-
-        int msgId = header.getInteger("msgId");
+        int msgId = event.getInteger("msgId");
         Assert.assertEquals(39, msgId);
 
-        String type = header.getString("type");
+        String type = event.getString("type");
         Assert.assertEquals("event", type);
 
-        String operation = header.getString("operation");
+        String operation = event.getString("operation");
         Assert.assertEquals("create", operation);
 
-        long timestamp = header.getLong("timestamp");
+        long timestamp = event.getLong("timestamp");
         Assert.assertEquals(1530208943500L, timestamp);
 
-        String eventId = body.getString("eventId");
+        String eventId = event.getString("eventId");
         Assert.assertEquals("ffd16cdf-e36e-4819-a1ab-fa4d021701b5", eventId);
 
-        String subCategory = body.getString("subCategory");
+        String subCategory = event.getString("subCategory");
         Assert.assertEquals("Sky Bet Championship", subCategory);
 
-        String name = body.getString("name");
+        String name = event.getString("name");
         Assert.assertEquals("\\|Hull\\| vs \\|Sunderland\\|", name);
 
-        long startTinme = body.getLong("startTime");
+        long startTinme = event.getLong("startTime");
         Assert.assertEquals(1530208889687L, startTinme);
 
-        String category = body.getString("category");
+        String category = event.getString("category");
         Assert.assertEquals("Football", category);
 
-        boolean displayed = body.getBoolean("displayed");
+        boolean displayed = event.getBoolean("displayed");
         Assert.assertFalse(displayed);
 
-        boolean suspended = body.getBoolean("suspended");
+        boolean suspended = event.getBoolean("suspended");
         Assert.assertTrue(suspended);
 
-        System.out.println(document);
-        prettyPrintDocument(document);
+        System.out.println(event);
+        prettyPrintDocument(event);
 
     }
 
@@ -120,16 +117,14 @@ public class NoSqlConnectionTests {
 
 
         // get Document created from packet2
-        Document document = feedmeDbConnection.getFixturesCollection().find( eq("event.body.eventId", "ffd16cdf-e36e-4819-a1ab-fa4d021701b5")).first();
-        Assert.assertNotNull(document);
+        Document event = feedmeDbConnection.getFixturesCollection().find( eq("eventId", "ffd16cdf-e36e-4819-a1ab-fa4d021701b5")).first();
+        Assert.assertNotNull(event);
 
-        Document event = document.get("event", Document.class);
-        Document body = event.get("body", Document.class);
-        String eventId = body.getString("eventId");
+        String eventId = event.getString("eventId");
         Assert.assertEquals("ffd16cdf-e36e-4819-a1ab-fa4d021701b5", eventId);
 
-        System.out.println(document);
-        prettyPrintDocument(document);
+        System.out.println(event);
+        prettyPrintDocument(event);
 
     }
 
@@ -146,12 +141,10 @@ public class NoSqlConnectionTests {
         feedmeDbConnection.createMarketInEventFixture(transformer.createJsonObject(new Packet(packet7)));
         Assert.assertEquals(2, feedmeDbConnection.getFixturesCollection().count());
 
-        // packet9 has same eventId as packet2. we assume correct behavior woulld be to replace (upsert) existing Document
         feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(packet9)));
         Assert.assertEquals(2, feedmeDbConnection.getFixturesCollection().count());
 
-        // Document is replaced by packet9, with the effect of resetting markets array
-        Document document = feedmeDbConnection.getFixturesCollection().find( eq("event.markets.market.body.marketId", "ec9a436d-fa23-4ea2-8a90-716d711ba5b9")).first();
+        Document document = feedmeDbConnection.getFixturesCollection().find( eq("markets.marketId", "ec9a436d-fa23-4ea2-8a90-716d711ba5b9")).first();
         Assert.assertNull(document);
     }
 
@@ -164,7 +157,7 @@ public class NoSqlConnectionTests {
         feedmeDbConnection.createOutcomeInMarket(transformer.createJsonObject(new Packet(packet13)));
         feedmeDbConnection.createOutcomeInMarket(transformer.createJsonObject(new Packet(packet14)));
 
-        Document document = feedmeDbConnection.getFixturesCollection().find( eq("event.markets.market.outcomes.outcome.body.outcomeId", "6b5a280a-8e92-4f15-9d69-b51f771fa9be")).first();
+        Document document = feedmeDbConnection.getFixturesCollection().find( eq("markets.outcomes.outcomeId", "6b5a280a-8e92-4f15-9d69-b51f771fa9be")).first();
         Assert.assertNotNull(document);
 
         System.out.println(document);
@@ -177,14 +170,11 @@ public class NoSqlConnectionTests {
 
         feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(createEventPacket)));
 
-        Document document = feedmeDbConnection.getFixturesCollection().find( eq("event.body.eventId", "fda2d9b3-7690-4d53-b86c-17915dc2784b")).first();
-        Document event = document.get("event", Document.class);
-        Document header = event.get("header", Document.class);
-        Document body = event.get("body", Document.class);
+        Document event = feedmeDbConnection.getFixturesCollection().find( eq("eventId", "fda2d9b3-7690-4d53-b86c-17915dc2784b")).first();
 
-        int msgId = header.getInteger("msgId");
-        boolean displayed = body.getBoolean("displayed");
-        boolean suspended = body.getBoolean("suspended");
+        int msgId = event.getInteger("msgId");
+        boolean displayed = event.getBoolean("displayed");
+        boolean suspended = event.getBoolean("suspended");
 
         Assert.assertEquals(39, msgId);
         Assert.assertFalse(displayed);
@@ -192,14 +182,11 @@ public class NoSqlConnectionTests {
 
         feedmeDbConnection.updateEventFixture(transformer.createJsonObject(new Packet(updateEventPacket)));
 
-        document = feedmeDbConnection.getFixturesCollection().find( eq("event.body.eventId", "fda2d9b3-7690-4d53-b86c-17915dc2784b")).first();
-        event = document.get("event", Document.class);
-        header = event.get("header", Document.class);
-        body = event.get("body", Document.class);
+        event = feedmeDbConnection.getFixturesCollection().find( eq("eventId", "fda2d9b3-7690-4d53-b86c-17915dc2784b")).first();
 
-        msgId = header.getInteger("msgId");
-        displayed = body.getBoolean("displayed");
-        suspended = body.getBoolean("suspended");
+        msgId = event.getInteger("msgId");
+        displayed = event.getBoolean("displayed");
+        suspended = event.getBoolean("suspended");
 
         Assert.assertEquals(191, msgId);
         Assert.assertTrue(displayed);
@@ -216,10 +203,9 @@ public class NoSqlConnectionTests {
         feedmeDbConnection.updateEventFixture(transformer.createJsonObject(new Packet(updateEventPacket)));
         feedmeDbConnection.updateEventFixture(transformer.createJsonObject(new Packet(updateEventOldPacket)));
 
-        Document document = feedmeDbConnection.getFixturesCollection()
-                .find(eq("event.body.eventId","fdc72db0-10a9-45d4-b30a-797609b046bd" )).first();
-        Assert.assertNotNull(document);
-        int msgId = document.get("event", Document.class).get("header", Document.class).getInteger("msgId");
+        Document event = feedmeDbConnection.getFixturesCollection().find(eq("eventId","fdc72db0-10a9-45d4-b30a-797609b046bd" )).first();
+        Assert.assertNotNull(event);
+        int msgId = event.getInteger("msgId");
         Assert.assertEquals(377, msgId);
     }
 
@@ -227,34 +213,82 @@ public class NoSqlConnectionTests {
     public void updateMarketOperations_preservesOrder(){
         String createEventPacket = "|77|create|event|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|Football|Sky Bet Championship|\\|Cardiff\\| vs \\|Bristol City\\||1530405913833|0|1|";
         String createMarketPacket = "|82|create|market|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|76a08689-c58c-4f61-b969-d6ac1641a4a7|Both Teams To Score|0|1|";
+        String createMarketPacket2 = "|87|create|market|1530209674774|fdc72db0-10a9-45d4-b30a-797609b046bd|ec9a436d-fa23-4ea2-8a90-716d711ba5b9|Match Result|0|1|";
+        String createMarketPacket3 = "|93|create|market|1530209672296|fdc72db0-10a9-45d4-b30a-797609b046bd|2e30bde0-9704-4ac0-8636-45c6c0bcbc64|Goal Handicap (+2)|0|1|";
         String updateMarketPacket = "|298|update|market|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|76a08689-c58c-4f61-b969-d6ac1641a4a7|Both Teams To Score|0|1|";
         String updateMarketAgainPacket = "|299|update|market|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|76a08689-c58c-4f61-b969-d6ac1641a4a7|Both Teams To Score|1|0|";
         String updateMarketOldPacket = "|297|update|market|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|76a08689-c58c-4f61-b969-d6ac1641a4a7|Both Teams To Score|1|1|";
 
         feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(createEventPacket)));
         feedmeDbConnection.createMarketInEventFixture(transformer.createJsonObject(new Packet(createMarketPacket)));
+        feedmeDbConnection.createMarketInEventFixture(transformer.createJsonObject(new Packet(createMarketPacket2)));
+        feedmeDbConnection.createMarketInEventFixture(transformer.createJsonObject(new Packet(createMarketPacket3)));
         feedmeDbConnection.updateMarketInEventFixture(transformer.createJsonObject(new Packet(updateMarketPacket)));
         feedmeDbConnection.updateMarketInEventFixture(transformer.createJsonObject(new Packet(updateMarketAgainPacket)));
         feedmeDbConnection.updateMarketInEventFixture(transformer.createJsonObject(new Packet(updateMarketOldPacket)));
 
-        Document document = feedmeDbConnection.getFixturesCollection()
-                .find(eq("event.body.eventId","fdc72db0-10a9-45d4-b30a-797609b046bd" )).first();
-        Assert.assertNotNull(document);
+        Document event = feedmeDbConnection.getFixturesCollection()
+                .find(eq("markets.marketId","76a08689-c58c-4f61-b969-d6ac1641a4a7" )).first();
+        Assert.assertNotNull(event);
 
-        Document event = document.get("event", Document.class);
         List<Document> markets =  (ArrayList<Document>) event.get("markets");
         Assert.assertNotNull(markets);
 
         int msgId = -1;
         for(Document market : markets){
-            if (market.get("market", Document.class).get("body", Document.class).get("marketId").equals("76a08689-c58c-4f61-b969-d6ac1641a4a7")){
-                msgId = market.get("market", Document.class).get("header", Document.class).getInteger("msgId");
+            if (market.get("marketId").equals("76a08689-c58c-4f61-b969-d6ac1641a4a7")){
+                msgId = market.getInteger("msgId");
             }
         }
 
         Assert.assertEquals(299, msgId);
     }
 
+    @Test
+    public void updateOutcomeOperations_preservcesOrder(){
+        String createEventPacket = "|77|create|event|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|Football|Sky Bet Championship|\\|Cardiff\\| vs \\|Bristol City\\||1530405913833|0|1|";
+        String createMarketPacket = "|82|create|market|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|76a08689-c58c-4f61-b969-d6ac1641a4a7|Both Teams To Score|0|1|";
+        String createOutcomePacket = "|100|create|outcome|1530208983671|76a08689-c58c-4f61-b969-d6ac1641a4a7|6b5a280a-8e92-4f15-9d69-b51f771fa9be|\\|Cardiff\\| -1|1/25|1|0|";
+        String createOutcomePacket2 = "|311|create|outcome|1530209146444|76a08689-c58c-4f61-b969-d6ac1641a4a7|186f67d6-9965-4bfb-8d37-136481514b25|\\|Bristol City\\| +1|3/1|1|0|";
+        String updateOutcomePacket3 = "|312|update|outcome|1530209146444|76a08689-c58c-4f61-b969-d6ac1641a4a7|186f67d6-9965-4bfb-8d37-136481514b25|\\|Bristol City\\| +1|20/1|1|0|";
+        String updateOutcomePacket4 = "|310|update|outcome|1530209146444|76a08689-c58c-4f61-b969-d6ac1641a4a7|186f67d6-9965-4bfb-8d37-136481514b25|\\|Bristol City\\| +1|7/1|1|0|";
+
+        feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(createEventPacket)));
+        feedmeDbConnection.createMarketInEventFixture(transformer.createJsonObject(new Packet(createMarketPacket)));
+        feedmeDbConnection.createOutcomeInMarket(transformer.createJsonObject(new Packet(createOutcomePacket)));
+        feedmeDbConnection.createOutcomeInMarket(transformer.createJsonObject(new Packet(createOutcomePacket2)));
+        feedmeDbConnection.updateOutcomeInMarket(transformer.createJsonObject(new Packet(updateOutcomePacket3)));
+        feedmeDbConnection.updateOutcomeInMarket(transformer.createJsonObject(new Packet(updateOutcomePacket4)));
+
+        Document event = feedmeDbConnection.getFixturesCollection()
+                .find(eq("markets.outcomes.outcomeId","186f67d6-9965-4bfb-8d37-136481514b25" )).first();
+
+        Assert.assertNotNull(event);
+
+        List<Document> markets =  (ArrayList<Document>) event.get("markets");
+        Assert.assertNotNull(markets);
+
+        Document outcome = null;
+        for(Document market : markets){
+            if (market.get("marketId").equals("76a08689-c58c-4f61-b969-d6ac1641a4a7")){
+                List<Document> outcomes = (ArrayList<Document>) market.get("outcomes");
+                for(Document document : outcomes){
+                    if ("186f67d6-9965-4bfb-8d37-136481514b25".equals(document.get("outcomeId"))){
+                        outcome = document;
+                        break;
+                    }
+                }
+            }
+            if (outcome != null){
+                break;
+            }
+        }
+
+        Assert.assertNotNull(outcome);
+        int msgId = outcome.getInteger("msgId");
+        Assert.assertEquals(312, msgId);
+
+    }
 
     private void prettyPrintDocument(Document document){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

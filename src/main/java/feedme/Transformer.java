@@ -13,20 +13,11 @@ class Transformer {
     }
 
 
-    ObjectNode createJsonObject(final Packet packet){
-        String typeName = packet.getTypeName();
-        ObjectNode json = jsonNodeFactory.objectNode();
-
-        json.set(typeName, buildJsonType(packet));
-
-        return json;
-    }
-
-    private ObjectNode buildJsonType(final Packet packet){
+    public ObjectNode createJsonObject(final Packet packet){
         ObjectNode rootNode = jsonNodeFactory.objectNode();
 
-        rootNode.set("header", createJsonHeader(packet));
-        rootNode.set("body", createJsonBody(packet));
+        createJsonFromHeader(packet, rootNode);
+        createJsonFromBody(packet, rootNode);
 
         if (packet.getTypeName().equals("event")){
             rootNode.set("markets", jsonNodeFactory.arrayNode());
@@ -39,26 +30,19 @@ class Transformer {
         return rootNode;
     }
 
-    private ObjectNode createJsonHeader(final Packet packet){
+    private void createJsonFromHeader(final Packet packet, ObjectNode json){
         Type type = types.getType(packet.getTypeName());
-
-        return createJsonContent(packet, type.getHeaderMap());
+        createJsonContent(packet, type.getHeaderMap(), json);
     }
 
-    private ObjectNode createJsonBody(final Packet packet){
+    private void createJsonFromBody(final Packet packet, ObjectNode json){
         Type type = types.getType(packet.getTypeName());
-        ObjectNode json = createJsonContent(packet, type.getBodyMap());
-
-        return json;
+        createJsonContent(packet, type.getBodyMap(), json);
     }
 
-    private ObjectNode createJsonContent(final Packet packet, final ContentMap contentMap){
+    private void createJsonContent(final Packet packet, final ContentMap contentMap, ObjectNode json){
         String[] packetStrings = packet.getPacketStrings();
-        ObjectNode json = jsonNodeFactory.objectNode();
-
         contentMap.forEach((index, field)-> addJsonFieldToBuilder(index, field, packetStrings, json));
-
-        return json;
     }
 
     private void addJsonFieldToBuilder(final Integer index, final Field field, final String[] packetStrings, ObjectNode json){

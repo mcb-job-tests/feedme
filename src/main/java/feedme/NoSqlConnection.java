@@ -3,19 +3,17 @@ package feedme;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.addToSet;
-import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 
 public class NoSqlConnection {
@@ -37,12 +35,14 @@ public class NoSqlConnection {
     }
 
     UpdateResult createEventFixture(String fixture){
-        Document document = Document.parse( fixture );
-        String eventId = getEventIdFromCollectionRootDocument(document);
+        Document event = Document.parse( fixture );
+        String eventId = event.getString("eventId");
+
         return fixturesCollection.replaceOne(
-                eq("event.body.eventId", eventId),
-                document,
-                new UpdateOptions().upsert(true).bypassDocumentValidation(true));
+                eq("eventId", eventId),
+                event,
+                new UpdateOptions().upsert(true).bypassDocumentValidation(true)
+        );
     }
 
     void updateEventFixture(ObjectNode fixture){
@@ -50,15 +50,19 @@ public class NoSqlConnection {
     }
 
     UpdateResult updateEventFixture(String fixture){
-        Document document = Document.parse( fixture );
-        Document event = document.get("event", Document.class);
-        Document body = event.get("body", Document.class);
-        Document header = event.get("header", Document.class);
-        String eventId = body.getString("eventId");
+        Document event = Document.parse( fixture );
+        String eventId = event.getString("eventId");
 
         return fixturesCollection.updateOne(
-                and( eq("event.body.eventId", eventId), lt("event.header.msgId", header.getInteger("msgId"))),
-                combine( set("event.header", header), set("event.body", body) ) );
+                eq("eventId", eventId),
+                event,
+                new UpdateOptions().arrayFilters(
+                        Collections.singletonList(
+                                and( eq("eventId", eventId),
+                                     lt("msgId", event.getInteger("msgId")))
+                        )
+                )
+        );
     }
 
     UpdateResult createMarketInEventFixture(ObjectNode json){
@@ -66,14 +70,13 @@ public class NoSqlConnection {
     }
 
     UpdateResult createMarketInEventFixture(String jsonString){
-        Document document = Document.parse( jsonString );
-        Document market = document.get("market", Document.class);
-        Document body = market.get("body", Document.class);
-        String eventId = body.getString("eventId");
+        Document market = Document.parse( jsonString );
+        String eventId = market.getString("eventId");
 
         return fixturesCollection.updateOne(
-                eq("event.body.eventId", eventId),
-                addToSet("event.markets", document));
+                eq("eventId", eventId),
+                addToSet("markets", market)
+        );
     }
 
     UpdateResult updateMarketInEventFixture(ObjectNode json){
@@ -81,16 +84,21 @@ public class NoSqlConnection {
     }
 
     UpdateResult updateMarketInEventFixture(String jsonString){
-        Document document = Document.parse( jsonString );
-        Document market = document.get("market", Document.class);
-        Document header = market.get("header", Document.class);
-        Document body = market.get("body", Document.class);
-        String marketId = body.getString("marketId");
+        Document market = Document.parse( jsonString );
+        String marketId = market.getString("marketId");
+        int msgId = market.getInteger("msgId");
 
         return fixturesCollection.updateOne(
-                and( eq("event.markets.market.body.marketId", marketId),
-                     lt("event.markets.market.header.msgId", header.getInteger("msgId"))),
-                set("event.markets.$.market", market));
+                eq("markets.marketId", marketId),
+                set("markets.$[m]", market),
+                new UpdateOptions().arrayFilters(
+                        Collections.singletonList(
+                                and( eq("m.marketId", marketId),
+                                     lt("m.msgId", msgId)
+                                )
+                        )
+                )
+        );
     }
 
     UpdateResult createOutcomeInMarket(ObjectNode json){
@@ -98,14 +106,13 @@ public class NoSqlConnection {
     }
 
     UpdateResult createOutcomeInMarket(String jsonString){
-        Document document = Document.parse( jsonString );
-        Document outcome = document.get("outcome", Document.class);
-        Document body = outcome.get("body", Document.class);
-        String marketId = body.getString("marketId");
+        Document outcome = Document.parse( jsonString );
+        String marketId = outcome.getString("marketId");
 
         return fixturesCollection.updateOne(
-                eq("event.markets.market.body.marketId", marketId),
-                addToSet("event.markets.$.market.outcomes", document));
+                eq("markets.marketId", marketId),
+                addToSet("markets.$.outcomes", outcome)
+        );
     }
 
     UpdateResult updateOutcomeInMarket(ObjectNode json){
@@ -113,26 +120,22 @@ public class NoSqlConnection {
     }
 
     UpdateResult updateOutcomeInMarket(String jsonString){
-        Document document = Document.parse( jsonString );
-        Document outcome = document.get("outcome", Document.class);
-        Document body = outcome.get("body", Document.class);
-        String outcomeId = body.getString("outcomeId");
-        String marketId = body.getString("marketId");
+        Document outcome = Document.parse( jsonString );
+        String outcomeId = outcome.getString("outcomeId");
+        int msgId = outcome.getInteger("msgId");
 
-        return fixturesCollection.updateOne(
-                eq("event.markets.market.body.marketId", marketId),
-                set("event.markets.$.market.outcomes.$[o]", document),
+        UpdateResult updateResult = fixturesCollection.updateOne(
+                eq("markets.outcomes.outcomeId", outcomeId),
+                set("markets.$.outcomes.$[o]", outcome),
                 new UpdateOptions().arrayFilters(
-                        Collections.singletonList(
-                                Filters.eq("o.outcome.body.outcomeId", outcomeId))));
-
-    }
-
-    private String getEventIdFromCollectionRootDocument(Document document){
-        Document event = document.get("event", Document.class);
-        Document body = event.get("body", Document.class);
-
-        return body.getString("eventId");
+                        Arrays.asList(
+                                and( eq("o.outcomeId", outcomeId),
+                                     lt("o.msgId", msgId)
+                                )
+                        )
+                    )
+        );
+        return updateResult;
     }
 
     MongoCollection<Document> getFixturesCollection() {
@@ -148,7 +151,7 @@ public class NoSqlConnection {
     }
 
     boolean isEventDocumentExists(String eventId){
-        Long count = fixturesCollection.count(Filters.eq("event.body.eventId", eventId));
+        Long count = fixturesCollection.count(Filters.eq("eventId", eventId));
         return !count.equals(0L);
     }
 }
