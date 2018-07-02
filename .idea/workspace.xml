@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3fb0fcd9-ff8c-447b-9c3a-0601d8131d51" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/feedme/JsonConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/feedme/JsonConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/feedme/NoSqlConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/feedme/NoSqlConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/feedme/JsonConsumer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/feedme/JsonConsumer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/feedme/NoSqlConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/feedme/NoSqlConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/feedme/NoSqlConnectionTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/feedme/NoSqlConnectionTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bundle" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -73,10 +67,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Transformer.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Transformer.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/feedme/Transformer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="595">
+                <state relative-caret-position="885">
                   <caret line="59" column="47" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="47" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -90,7 +84,7 @@
           <file leaf-file-name="JsonConsumer.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/feedme/JsonConsumer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="458">
+                <state relative-caret-position="825">
                   <caret line="61" column="25" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -102,8 +96,8 @@
           <file leaf-file-name="JsonServer.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/feedme/JsonServer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="420">
-                  <caret line="30" selection-start-line="30" selection-end-line="30" />
+                <state relative-caret-position="150">
+                  <caret line="10" column="52" lean-forward="true" selection-start-line="10" selection-start-column="52" selection-end-line="10" selection-end-column="52" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -114,7 +108,7 @@
           <file leaf-file-name="Application.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/feedme/Application.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="518">
+                <state relative-caret-position="540">
                   <caret line="36" selection-start-line="36" selection-end-line="36" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -144,13 +138,12 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="NoSqlConnectionTests.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="NoSqlConnectionTests.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="338">
-                  <caret line="176" column="62" lean-forward="true" selection-start-line="176" selection-start-column="62" selection-end-line="176" selection-end-column="62" />
+                <state relative-caret-position="98">
+                  <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
                   <folding>
-                    <element signature="imports" expanded="true" />
                     <element signature="e#2138#2139#0" expanded="true" />
                     <element signature="e#2197#2198#0" expanded="true" />
                   </folding>
@@ -221,7 +214,6 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/feedme/DomParser.java" />
         <option value="$PROJECT_DIR$/src/main/java/feedme/Application.java" />
-        <option value="$PROJECT_DIR$/src/main/java/feedme/JsonServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/feedme/Types.java" />
         <option value="$PROJECT_DIR$/src/test/java/feedme/DomParserTests.java" />
         <option value="$PROJECT_DIR$/src/main/java/feedme/Packet.java" />
@@ -231,6 +223,7 @@
         <option value="$PROJECT_DIR$/src/main/resources/types.xml" />
         <option value="$PROJECT_DIR$/src/main/java/feedme/NoSqlConnection.java" />
         <option value="$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java" />
+        <option value="$PROJECT_DIR$/src/main/java/feedme/JsonServer.java" />
       </list>
     </option>
   </component>
@@ -262,8 +255,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="44" />
+    <option name="x" value="47" />
+    <option name="y" value="62" />
     <option name="width" value="2466" />
     <option name="height" value="1316" />
   </component>
@@ -572,20 +565,11 @@
       <workItem from="1530279404416" duration="31075000" />
       <workItem from="1530361151548" duration="57376000" />
       <workItem from="1530453201999" duration="22767000" />
-      <workItem from="1530543494550" duration="26720000" />
+      <workItem from="1530543494550" duration="28033000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="NoSqlConnectionTests_replaceEventFixtureDocument_FindWithValidEventID_ReturnsReplacedDocument_WithEmptyMarkets - 2018.07.02 at 23h 03m 42s.xml">
-      <configuration name="NoSqlConnectionTests.replaceEventFixtureDocument_FindWithValidEventID_ReturnsReplacedDocument_WithEmptyMarkets" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="NoSqlConnectionTests_replaceEventFixtureDocument_FindWithValidEventID_ReturnsReplacedDocument_WithEmptyMarkets - 2018.07.02 at 23h 04m 45s.xml">
-      <configuration name="NoSqlConnectionTests.replaceEventFixtureDocument_FindWithValidEventID_ReturnsReplacedDocument_WithEmptyMarkets" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="NoSqlConnectionTests_replaceEventFixtureDocument_FindWithValidEventID_ReturnsReplacedDocument_WithEmptyMarkets - 2018.07.02 at 23h 05m 03s.xml">
-      <configuration name="NoSqlConnectionTests.replaceEventFixtureDocument_FindWithValidEventID_ReturnsReplacedDocument_WithEmptyMarkets" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="NoSqlConnectionTests_replaceEventFixtureDocument_FindWithValidEventID_ReturnsReplacedDocument_WithEmptyMarkets - 2018.07.02 at 23h 06m 36s.xml">
       <configuration name="NoSqlConnectionTests.replaceEventFixtureDocument_FindWithValidEventID_ReturnsReplacedDocument_WithEmptyMarkets" configurationId="JUnit" />
     </history-entry>
@@ -607,13 +591,21 @@
     <history-entry file="NoSqlConnectionTests_updateEventFixtureDocument_FindWithValidEventId_ReturnsUpdatedDocument - 2018.07.02 at 23h 34m 17s.xml">
       <configuration name="NoSqlConnectionTests.updateEventFixtureDocument_FindWithValidEventId_ReturnsUpdatedDocument" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="NoSqlConnectionTests_updateEventFixtureOperations_preservesOrder - 2018.07.02 at 23h 36m 12s.xml">
+      <configuration name="NoSqlConnectionTests.updateEventFixtureOperations_preservesOrder" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="NoSqlConnectionTests_updateEventFixtureDocument_FindWithValidEventId_ReturnsUpdatedDocument - 2018.07.02 at 23h 37m 45s.xml">
+      <configuration name="NoSqlConnectionTests.updateEventFixtureDocument_FindWithValidEventId_ReturnsUpdatedDocument" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="NoSqlConnectionTests - 2018.07.02 at 23h 38m 58s.xml">
+      <configuration name="NoSqlConnectionTests" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="197668000" />
+    <option name="totallyTimeSpent" value="198981000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="44" width="2466" height="1316" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -625,12 +617,12 @@
       <window_info anchor="right" id="Maven Projects" order="3" weight="0.05413223" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.28945148" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28945148" />
       <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.4835443" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.4835443" />
       <window_info id="Capture Tool" order="1" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.17107438" />
+      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.17107438" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Learn" order="7" weight="0.32991952" />
       <window_info id="Structure" order="5" side_tool="true" weight="0.25" />
@@ -696,37 +688,37 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java</url>
-          <line>63</line>
+          <line>62</line>
           <properties />
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java</url>
-          <line>114</line>
+          <line>113</line>
           <properties />
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java</url>
-          <line>133</line>
+          <line>132</line>
           <properties />
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java</url>
-          <line>187</line>
+          <line>189</line>
           <properties />
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java</url>
-          <line>44</line>
+          <line>43</line>
           <properties />
           <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java</url>
-          <line>203</line>
+          <line>205</line>
           <properties />
           <option name="timeStamp" value="84" />
         </line-breakpoint>
@@ -1071,30 +1063,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/feedme/Application.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="518">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/feedme/FeedMeClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="438">
           <caret line="33" selection-start-line="33" selection-end-line="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/feedme/JsonServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1126,32 +1098,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/feedme/JsonConsumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="61" column="25" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/types.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="45" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/feedme/Transformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="59" column="47" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#302#303#0" expanded="true" />
-            <element signature="e#351#352#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1183,12 +1133,53 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/feedme/NoSqlConnectionTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="176" column="62" lean-forward="true" selection-start-line="176" selection-start-column="62" selection-end-line="176" selection-end-column="62" />
+        <state relative-caret-position="98">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="e#2138#2139#0" expanded="true" />
             <element signature="e#2197#2198#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/feedme/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/feedme/JsonConsumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="61" column="25" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/feedme/JsonServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="52" lean-forward="true" selection-start-line="10" selection-start-column="52" selection-end-line="10" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/feedme/Transformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="59" column="47" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#302#303#0" expanded="true" />
+            <element signature="e#351#352#0" expanded="true" />
           </folding>
         </state>
       </provider>
