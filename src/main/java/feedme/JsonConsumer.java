@@ -59,7 +59,7 @@ class JsonConsumer {
              case "event":
                  switch (operationName) {
                      case "create":
-                         updateResult = feedmeDbConnection.createEventFixture(jsonString);
+                         feedmeDbConnection.createEventFixture(jsonString);
                          break;
                      case "update":
                          updateResult = feedmeDbConnection.updateEventFixture(jsonString);

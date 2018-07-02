@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class NoSqlConnectionTests {
     private String packet6 = "|390|update|outcome|1530209169747|471b6d91-e964-47f6-97fc-69af0445170c|2974c121-87da-4fee-89a5-11df7292ed9f|\\|Colchester\\| +1|1/2|1|0|";
     private String packet7 = "|268|create|market|1530209674774|ffd16cdf-e36e-4819-a1ab-fa4d021701b5|ec9a436d-fa23-4ea2-8a90-716d711ba5b9|Match Result|0|1|";
     private String packet8 = "|263|create|market|1530209672296|fedb9608-aed7-43ae-9124-6f5d74c7c6b6|2e30bde0-9704-4ac0-8636-45c6c0bcbc64|Goal Handicap (+2)|0|1|";
-    private String packet9 = "|444|create|event|1530208943500|ffd16cdf-e36e-4819-a1ab-fa4d021701b5|Football|Awesome Sky Bet Championship|\\|Hull\\| vs \\|Sunderland\\||1530208889687|0|1|";
+    private String packet9 = "|4|create|event|1530208943500|ffd16cdf-e36e-4819-a1ab-fa4d021701b5|Football|Awesome Sky Bet Championship|\\|Hull\\| vs \\|Sunderland\\||1530208889687|0|1|";
     private String packet13 = "|333|update|outcome|1530208983671|ec9a436d-fa23-4ea2-8a90-716d711ba5b9|6b5a280a-8e92-4f15-9d69-b51f771fa9be|\\|Hull\\| -1|1/25|1|0|";
     private String packet14 = "|377|update|outcome|1530209123408|ec9a436d-fa23-4ea2-8a90-716d711ba5b9|50861233-bd4b-4b5f-89e6-c30247e735f5|\\|Hull\\| +1|1/7|1|0|";
 
@@ -129,26 +128,6 @@ public class NoSqlConnectionTests {
     }
 
     @Test
-    public void replaceEventFixtureDocument_FindWithValidEventID_ReturnsReplacedDocument_WithEmptyMarkets() {
-        Assert.assertEquals(0, feedmeDbConnection.getFixturesCollection().count());
-
-        feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(packet1)));
-        Assert.assertEquals(1, feedmeDbConnection.getFixturesCollection().count());
-
-        feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(packet2)));
-        Assert.assertEquals(2, feedmeDbConnection.getFixturesCollection().count());
-
-        feedmeDbConnection.createMarketInEventFixture(transformer.createJsonObject(new Packet(packet7)));
-        Assert.assertEquals(2, feedmeDbConnection.getFixturesCollection().count());
-
-        feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(packet9)));
-        Assert.assertEquals(2, feedmeDbConnection.getFixturesCollection().count());
-
-        Document document = feedmeDbConnection.getFixturesCollection().find( eq("markets.marketId", "ec9a436d-fa23-4ea2-8a90-716d711ba5b9")).first();
-        Assert.assertNull(document);
-    }
-
-    @Test
     public void addOutcomeToAssociatedMarketInEventFixtureDocument_FindWithValidOutcomeID_ReturnsUpdatedDocument() {
 
         feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(packet1)));
@@ -167,6 +146,7 @@ public class NoSqlConnectionTests {
     @Test public void updateEventFixtureDocument_FindWithValidEventId_ReturnsUpdatedDocument(){
         String createEventPacket = "|39|create|event|1530390471900|fda2d9b3-7690-4d53-b86c-17915dc2784b|Football|Premier League|\\|Arsenal\\| vs \\|Manchester City\\||1530390482506|0|1|";
         String updateEventPacket = "|191|update|event|1530390482510|fda2d9b3-7690-4d53-b86c-17915dc2784b|Football|Premier League|\\|Arsenal\\| vs \\|Manchester City\\||1530390482506|1|0|";
+        String createMarketPacket = "|87|create|market|1530209674774|fda2d9b3-7690-4d53-b86c-17915dc2784b|ec9a436d-fa23-4ea2-8a90-716d711ba5b9|Match Result|0|1|";
 
         feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(createEventPacket)));
 
@@ -179,6 +159,8 @@ public class NoSqlConnectionTests {
         Assert.assertEquals(39, msgId);
         Assert.assertFalse(displayed);
         Assert.assertTrue(suspended);
+
+        feedmeDbConnection.createMarketInEventFixture(transformer.createJsonObject(new Packet(createMarketPacket)));
 
         feedmeDbConnection.updateEventFixture(transformer.createJsonObject(new Packet(updateEventPacket)));
 
@@ -198,8 +180,10 @@ public class NoSqlConnectionTests {
         String createEventPacket = "|77|create|event|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|Football|Sky Bet Championship|\\|Cardiff\\| vs \\|Bristol City\\||1530405913833|0|1|";
         String updateEventPacket = "|377|update|event|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|Football|Sky Bet Championship|\\|Cardiff\\| vs \\|Bristol City\\||1530405913833|1|1|";
         String updateEventOldPacket = "|376|update|event|1530405905035|fdc72db0-10a9-45d4-b30a-797609b046bd|Football|Sky Bet Championship|\\|Cardiff\\| vs \\|Bristol City\\||1530405913833|0|1|";
+        String createMarketPacket = "|87|create|market|1530209674774|fdc72db0-10a9-45d4-b30a-797609b046bd|ec9a436d-fa23-4ea2-8a90-716d711ba5b9|Match Result|0|1|";
 
         feedmeDbConnection.createEventFixture(transformer.createJsonObject(new Packet(createEventPacket)));
+        feedmeDbConnection.createMarketInEventFixture(transformer.createJsonObject(new Packet(createMarketPacket)));
         feedmeDbConnection.updateEventFixture(transformer.createJsonObject(new Packet(updateEventPacket)));
         feedmeDbConnection.updateEventFixture(transformer.createJsonObject(new Packet(updateEventOldPacket)));
 

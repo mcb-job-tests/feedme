@@ -25,7 +25,6 @@ class JsonServer {
 
         int count = 0;
         int topic = 1;
-        int fixtureCount = 0;
 
         while ( count < numberOfPacketsToProcess && !Thread.currentThread().isInterrupted() ) {
             Packet packet = new Packet(feedMeClient.sendMessage(""));
@@ -43,13 +42,7 @@ class JsonServer {
             }
 
             count++;
-
-            if (typeName.equals("event") && operation.equals("create")){
-                fixtureCount++;
-            }
         }
-
-        System.out.println("fixtureCount----> " + fixtureCount);
 
         // Notify Consumers to Stop
         String message = String.format("%d %s %s %s", STOP_TOPIC, "STOP", "STOP", "STOP");

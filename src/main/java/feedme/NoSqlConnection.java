@@ -1,6 +1,7 @@
 package feedme;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -8,12 +9,16 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.addToSet;
+import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 
 public class NoSqlConnection {
@@ -34,15 +39,11 @@ public class NoSqlConnection {
         createEventFixture(fixture.toString());
     }
 
-    UpdateResult createEventFixture(String fixture){
+    void createEventFixture(String fixture){
         Document event = Document.parse( fixture );
         String eventId = event.getString("eventId");
 
-        return fixturesCollection.replaceOne(
-                eq("eventId", eventId),
-                event,
-                new UpdateOptions().upsert(true).bypassDocumentValidation(true)
-        );
+        fixturesCollection.insertOne(event);
     }
 
     void updateEventFixture(ObjectNode fixture){
@@ -52,16 +53,26 @@ public class NoSqlConnection {
     UpdateResult updateEventFixture(String fixture){
         Document event = Document.parse( fixture );
         String eventId = event.getString("eventId");
+        int msgId = event.getInteger("msgId");
+
+        Bson newValue = new Document("msgId", msgId)
+                .append("operation", event.getString("operation"))
+                .append("type", event.getString("type"))
+                .append("timestamp", event.getLong("timestamp"))
+                .append("eventId", event.getString("eventId"))
+                .append("category", event.getString("category"))
+                .append("subCategory", event.getString("subCategory"))
+                .append("name", event.getString("name"))
+                .append("startTime", event.getLong("startTime"))
+                .append("displayed", event.getBoolean("displayed"))
+                .append("suspended", event.getBoolean("suspended"));
+
+        Bson updateOperationDocument = new Document("$set", newValue);
 
         return fixturesCollection.updateOne(
-                eq("eventId", eventId),
-                event,
-                new UpdateOptions().arrayFilters(
-                        Collections.singletonList(
-                                and( eq("eventId", eventId),
-                                     lt("msgId", event.getInteger("msgId")))
-                        )
-                )
+                and( eq("eventId", eventId),
+                     lt("msgId", event.getInteger("msgId"))
+                ), updateOperationDocument
         );
     }
 
