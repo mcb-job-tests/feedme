@@ -6,6 +6,8 @@ I Developed on a Ubuntu 16.0.04 machine and used the following;
 
 IntelliJ IDEA as the IDE.
 
+Java & Junit 4
+
 Maven to manage a project's build process.
 
 MongoDB (version 4.0.0) as the NoSql datatbase. 
@@ -17,9 +19,7 @@ http://mongodb.github.io/mongo-java-driver/3.8/
 ZeroMQ
 http://zeromq.org/intro:read-the-manual
 
-Junit 4
-
-Other dependencies can be view in project pom.xml
+Other dependencies can be viewed in project pom.xml
 
 - Instructions
 
